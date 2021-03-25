@@ -14,14 +14,14 @@ class App:
         self.clock = pygame.time.Clock()
 
         self.running = True
-        self.state = 'intro'
+        self.state = 'start'
 
     def run(self):
         while self.running:
-            if self.state == 'intro':
-                self.intro_events()
-                self.intro_update()
-                self.intro_draw()
+            if self.state == 'start':
+                self.start_events()
+                self.start_update()
+                self.start_draw()
             else:
                 pass
 
@@ -33,15 +33,28 @@ class App:
         # exit from Python
         sys.exit()
 
-    ##### INTRO FUNCTIONS #####
+    ##### HELPER FUNCTIONS #####
+    def draw_text(self, words, screen, position, size, color, font_name):
+        font = pygame.font.SysFont(font_name, size)
+        text = font.render(words, False, color)
+        # get the dimensions (width, height)
+        text_size = text.get_size()
+        position[0] = position[0] - text_size[0] // 2
+        position[1] = position[1] - text_size[1] // 2
+        screen.blit(text, position)
 
-    def intro_events(self):
+    ##### INTRO FUNCTIONS #####
+    def start_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.state = 'playing'
 
-    def intro_update(self):
+    def start_update(self):
         pass
 
-    def intro_draw(self):
+    def start_draw(self):
+        self.screen.fill(BLACK)
+        self.draw_text('PRESS SPACEBAR TO PLAY', self.screen, [WIDTH // 2, HEIGHT // 2], START_FONT_SIZE, START_FONT_COLOR, START_FONT)
         pygame.display.update()

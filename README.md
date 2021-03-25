@@ -13,5 +13,3 @@
 
 - [Python 3](https://www.python.org/)
 - [Pygame](https://www.pygame.org/)
-- [Flat Icons](https://www.flaticon.com/)
-- [Freepik](https://www.freepik.com/)
