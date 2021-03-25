@@ -49,7 +49,12 @@ bulletY = 480
 bulletY_change = 10
 bullet_state = "ready"
 
-score = 0
+# Scoreboard
+score_value = 0
+font = pygame.font.Font("freesansbold.ttf", 32)
+
+textX = 10
+textY = 10
 
 
 def player(x, y):
@@ -77,6 +82,10 @@ def isCollision(enemyX, enemyY, bulletX, bulletY):
     else:
         return False
 
+
+def show_score(x, y):
+    score = font.render("Score: " + str(score_value), True, (255, 255, 255))
+    screen.blit(score, (x, y))
 
 # Game loop
 running = True
@@ -138,8 +147,7 @@ while running:
         if collision:
             bulletY = 480
             bullet_state = "ready"
-            score += 1
-            print("Score: ", score)
+            score_value += 1
             enemyX[i] = random.randint(0, 736)
             enemyY[i] = random.randint(50, 150)
 
@@ -157,6 +165,7 @@ while running:
 
 
     player(playerX, playerY)
+    show_score(textX, textY)
 
     # Screen needs to update within the loop
     pygame.display.update()
