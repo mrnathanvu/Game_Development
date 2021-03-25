@@ -7,6 +7,9 @@ pygame.init()
 # Create a screen of 800(W) x 600(H)
 screen = pygame.display.set_mode((800, 600))
 
+# Background
+background = pygame.image.load("img/background.jpg")
+
 # Title & Icon
 pygame.display.set_caption("Space Invaders")
 
@@ -39,8 +42,10 @@ def enemy(x, y):
 # Game loop
 running = True
 while running:
-    # Background
+    # Background color
     screen.fill((0, 0, 0))
+    # Background image, draw the image from the top left conner
+    screen.blit(background, (0, 0))
 
     # Events
     for event in pygame.event.get():
