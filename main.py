@@ -1,5 +1,6 @@
 import pygame
 import random
+import math
 
 # Initialize pygame package
 pygame.init()
@@ -26,7 +27,7 @@ playerX_change = 0
 # Enemy
 enemyImg = pygame.image.load("img/alien.png")
 
-enemyX = random.randint(0, 800)
+enemyX = random.randint(0, 736)
 enemyY = random.randint(50, 150)
 enemyX_change = 3
 enemyY_change = 40
@@ -39,19 +40,34 @@ bulletY = 480
 bulletY_change = 10
 bullet_state = "ready"
 
+score = 0
+
 
 def player(x, y):
     # blit = draw an image on the screen
     screen.blit(playerImg, (x, y))
 
+
 def enemy(x, y):
     screen.blit(enemyImg, (x, y))
+
 
 def fire_bullet(x, y):
     global bullet_state
     bullet_state = "fire"
 
     screen.blit(bulletImg, (x + 16, y + 10))
+
+
+# Distance between two points and the midpoint
+# D=sqrt((x2−x1)^2+(y2−y1)^2)
+def isCollision(enemyX, enemyY, bulletX, bulletY):
+    distance = math.sqrt(math.pow(enemyX - bulletX, 2) + math.pow(enemyY - bulletY, 2))
+    if distance < 27:
+        return True
+    else:
+        return False
+
 
 # Game loop
 running = True
@@ -115,6 +131,16 @@ while running:
     if bullet_state == "fire":
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
+
+    # Collision
+    collision = isCollision(enemyX, enemyY, bulletX, bulletY)
+    if collision:
+        bulletY = 480
+        bullet_state = "ready"
+        score += 1
+        print("Score: ", score)
+        enemyX = random.randint(0, 736)
+        enemyY = random.randint(50, 150)
 
     player(playerX, playerY)
     enemy(enemyX, enemyY)
