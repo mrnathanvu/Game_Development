@@ -27,6 +27,10 @@ def player(x, y):
 # Game loop
 running = True
 while running:
+    # Background
+    screen.fill((0, 0, 0))
+
+    # Events
     for event in pygame.event.get():
         # close button = quit event
         if event.type == pygame.QUIT:
@@ -35,27 +39,26 @@ while running:
         # Keystroke events
         # if an keystrokes is pressed
         if event.type == pygame.KEYDOWN:
-            print("A keystroke is pressed")
             # if the keystroke being pressed is the left key
             if event.key == pygame.K_LEFT:
-                print("Left arrow key is pressed")
-                playerX_change = -1
+                playerX_change = -5
             # if the keystroke being pressed is the right key
             if event.key == pygame.K_RIGHT:
-                print("Right arrow key is pressed")
-                playerX_change = 1
+                playerX_change = 5
         # if an keystrokes is released
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
-                print("The keystroke has been released")
                 # The spaceship stops when a keystroke is released
-                playerX_change = 0;
-
-
-    # Background
-    screen.fill((0, 0, 0))
+                playerX_change = 0
 
     playerX += playerX_change
+
+    if playerX <= 0:
+        playerX = 0
+    # spaceship.png is 64x64, so 800-64=736
+    elif playerX >= 736:
+        playerX = 736
+
     player(playerX, playerY)
 
     # Screen needs to update within the loop
