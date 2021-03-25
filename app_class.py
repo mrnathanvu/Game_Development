@@ -16,8 +16,10 @@ class App:
         self.running = True
         self.state = 'start'
 
-        self.cell_width = WIDTH // 28
-        self.cell_height = HEIGHT // 30
+        # 560 / 28 = 20
+        self.cell_width = MAZE_WIDTH // 28
+        # 620 / 30 = 20.7
+        self.cell_height = MAZE_HEIGHT // 30
 
         self.load()
 
@@ -55,14 +57,19 @@ class App:
 
     def load(self):
         self.background = pygame.image.load('img/background.png')
-        self.background = pygame.transform.scale(self.background, (WIDTH, HEIGHT))
+        # resize to new resolution
+        self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
 
     def draw_grid(self):
+        # 560 / 20 = 28 lines
         for x in range(WIDTH // self.cell_width):
-            pygame.draw.line(self.screen, (107, 107, 107), (x * self.cell_width, 0), (x * self.cell_width, HEIGHT))
+            # draw vertical lines (start position of the line -> end position of the line, (x, y)
+            pygame.draw.line(self.background, (107, 107, 107), (x * self.cell_width, 0), (x * self.cell_width, HEIGHT))
 
+        # 620 / 20.7 = 30 lines
         for x in range(HEIGHT // self.cell_height):
-            pygame.draw.line(self.screen, (107, 107, 107), (0, x * self.cell_height), (WIDTH, x * self.cell_height))
+            # draw horizontal lines (start position of the line -> end position of the line, (x, y)
+            pygame.draw.line(self.background, (107, 107, 107), (0, x * self.cell_height), (WIDTH, x * self.cell_height))
 
     #################### INTRO FUNCTIONS ####################
     def start_events(self):
@@ -77,7 +84,7 @@ class App:
 
     def start_draw(self):
         self.screen.fill(BLACK)
-        self.draw_text('HIGH SCORE', self.screen, [4, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
+        self.draw_text('HIGH SCORE: 0', self.screen, [4, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
         self.draw_text('PRESS SPACEBAR TO PLAY', self.screen, [WIDTH // 2, HEIGHT // 2], START_FONT_SIZE,
                        (170, 132, 58), START_FONT, centered=True)
         self.draw_text('1 PLAYER ONLY', self.screen, [WIDTH // 2, HEIGHT // 2 + 50], START_FONT_SIZE, (44, 167, 198),
@@ -94,6 +101,9 @@ class App:
         pass
 
     def playing_draw(self):
-        self.screen.blit(self.background, (0, 0))
+        self.screen.fill((0, 0, 0))
+        self.screen.blit(self.background, (TOP_BOTTOM_BUFFER // 2, TOP_BOTTOM_BUFFER // 2))
         self.draw_grid()
+        self.draw_text('HIGH SCORE: 0', self.screen, [4, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
+        self.draw_text('CURRENT SCORE: 0', self.screen, [254, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
         pygame.display.update()
