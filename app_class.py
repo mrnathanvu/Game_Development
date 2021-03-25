@@ -22,8 +22,12 @@ class App:
                 self.start_events()
                 self.start_update()
                 self.start_draw()
-            if self.state == 'playing':
-                pass
+            elif self.state == 'playing':
+                self.playing_events()
+                self.playing_update()
+                self.playing_draw()
+            else:
+                self.running = False
 
             # update the clock
             self.clock.tick(FPS)
@@ -60,4 +64,17 @@ class App:
         self.draw_text('HIGH SCORE', self.screen, [4, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
         self.draw_text('PRESS SPACEBAR TO PLAY', self.screen, [WIDTH // 2, HEIGHT // 2], START_FONT_SIZE, (170, 132, 58), START_FONT, centered=True)
         self.draw_text('1 PLAYER ONLY', self.screen, [WIDTH // 2, HEIGHT // 2 + 50], START_FONT_SIZE, (44, 167, 198), START_FONT, centered=True)
+        pygame.display.update()
+
+    ########## PLAYING FUNCTIONS ##########
+    def playing_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+
+    def playing_update(self):
+        pass
+
+    def playing_draw(self):
+        self.screen.fill((255, 0, 0))
         pygame.display.update()
