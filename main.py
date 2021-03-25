@@ -1,6 +1,7 @@
 import pygame
 import random
 import math
+from pygame import mixer
 
 # Initialize pygame package
 pygame.init()
@@ -55,6 +56,10 @@ font = pygame.font.Font("freesansbold.ttf", 32)
 
 textX = 10
 textY = 10
+
+# Background sound
+mixer.music.load("sound/background.wav")
+mixer.music.play(-1)
 
 
 def player(x, y):
@@ -113,6 +118,8 @@ while running:
                 playerX_change = 5
             if event.key == pygame.K_SPACE:
                 if bullet_state == "ready":
+                    bullet_sound = mixer.Sound("sound/laser.wav")
+                    bullet_sound.play()
                     # Get the spaceship current x coordinate
                     bulletX = playerX
                     fire_bullet(bulletX, bulletY)
@@ -145,6 +152,8 @@ while running:
         # Collision
         collision = isCollision(enemyX[i], enemyY[i], bulletX, bulletY)
         if collision:
+            explosion_sound = mixer.Sound("sound/explosion.wav")
+            explosion_sound.play()
             bulletY = 480
             bullet_state = "ready"
             score_value += 1
