@@ -7,7 +7,6 @@ BLACK = (0, 0, 0)
 
 # Font settings
 START_FONT_SIZE = 16
-START_FONT_COLOR = (170, 132, 58)
 START_FONT = 'arial black'
 # Player settings
 # Mob settings
