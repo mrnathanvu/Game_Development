@@ -1,6 +1,8 @@
 import pygame, sys
 from settings import *
 
+from player_class import *
+
 pygame.init()
 # a 2-Dimensional Vector
 vec = pygame.math.Vector2
@@ -20,6 +22,8 @@ class App:
         self.cell_width = MAZE_WIDTH // 28
         # 620 / 30 = 20.7
         self.cell_height = MAZE_HEIGHT // 30
+
+        self.player = Player(self, PLAYER_START_POS)
 
         self.load()
 
@@ -106,4 +110,5 @@ class App:
         self.draw_grid()
         self.draw_text('HIGH SCORE: 0', self.screen, [4, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
         self.draw_text('CURRENT SCORE: 0', self.screen, [254, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
+        self.player.draw()
         pygame.display.update()

@@ -1,3 +1,5 @@
+from pygame.math import Vector2 as vec
+
 # Screen settings
 WIDTH, HEIGHT = 610, 670  # 560 + 50 and 620 + 50 from TOP_BOTTOM_BUFFER
 FPS = 60
@@ -11,4 +13,6 @@ BLACK = (0, 0, 0)
 START_FONT_SIZE = 16
 START_FONT = 'arial black'
 # Player settings
+PLAYER_START_POS = vec(1, 1)
+PLAYER_COLOR = (190, 194, 15)
 # Mob settings
