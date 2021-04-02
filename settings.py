@@ -8,6 +8,7 @@ MAZE_WIDTH, MAZE_HEIGHT = WIDTH - TOP_BOTTOM_BUFFER, HEIGHT - TOP_BOTTOM_BUFFER
 
 # Color settings
 BLACK = (0, 0, 0)
+RED = (255, 0, 0)
 
 # Font settings
 START_FONT_SIZE = 16
