@@ -47,6 +47,10 @@ class App:
                 self.playing_events()
                 self.playing_update()
                 self.playing_draw()
+            elif self.state == 'game over':
+                self.game_over_events()
+                self.game_over_update()
+                self.game_over_draw()
             else:
                 self.running = False
 
@@ -118,6 +122,27 @@ class App:
         #     pygame.draw.rect(self.background, (255, 255, 0),
         #                     (coin.x * self.cell_width, coin.y * self.cell_height,
         #                      self.cell_width, self.cell_height))
+
+    def reset(self):
+        self.player.lives = 3
+        self.player.current_score = 0
+        self.player.grid_pos = vec(self.player.starting_pos)
+        self.player.pix_pos = self.player.get_pix_post()
+        self.player.direction *= 0
+
+        for enemy in self.enemies:
+            enemy.grid_pos = vec(enemy.starting_pos)
+            enemy.pix_pos = enemy.get_pix_pos()
+            enemy.direction *= 0
+
+        self.coins = []
+        with open('walls.txt', 'r') as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == "C":
+                        self.coins.append(vec(xidx, yidx))
+
+        self.state = 'playing'
 
     #################### INTRO FUNCTIONS ####################
     def start_events(self):
@@ -195,3 +220,20 @@ class App:
             pygame.draw.circle(self.screen, (254, 226, 62),
                               (int(coin.x * self.cell_width) + self.cell_width // 2 + TOP_BOTTOM_BUFFER // 2,
                                int(coin.y * self.cell_height) + self.cell_height // 2 + TOP_BOTTOM_BUFFER // 2), 5)
+
+#################### GAME OVER FUNCTIONS ####################
+    def game_over_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                self.reset()
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                self.running = False
+
+    def game_over_update(self):
+        pass
+
+    def game_over_draw(self):
+        self.screen.fill(BLACK)
+        pygame.display.update()
