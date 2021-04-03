@@ -10,7 +10,7 @@ class Player:
         self.app = app
         self.starting_pos = [pos.x, pos.y]
         self.grid_pos = pos
-        self.pix_pos = self.get_pix_post()
+        self.pix_pos = self.get_pix_pos()
         self.direction = vec(1, 0)
         self.stored_direction = None
         self.able_to_move = True
@@ -60,7 +60,7 @@ class Player:
         self.app.coins.remove(self.grid_pos)
         self.current_score += 1
 
-    def get_pix_post(self):
+    def get_pix_pos(self):
         return vec((self.grid_pos.x * self.app.cell_width) + TOP_BOTTOM_BUFFER // 2 + self.app.cell_width // 2,
                    (self.grid_pos.y * self.app.cell_height) + TOP_BOTTOM_BUFFER // 2 + self.app.cell_height // 2)
 

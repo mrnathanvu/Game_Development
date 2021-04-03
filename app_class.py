@@ -127,7 +127,7 @@ class App:
         self.player.lives = 3
         self.player.current_score = 0
         self.player.grid_pos = vec(self.player.starting_pos)
-        self.player.pix_pos = self.player.get_pix_post()
+        self.player.pix_pos = self.player.get_pix_pos()
         self.player.direction *= 0
 
         for enemy in self.enemies:
@@ -158,9 +158,9 @@ class App:
     def start_draw(self):
         self.screen.fill(BLACK)
         self.draw_text('HIGH SCORE: 0', self.screen, [4, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
-        self.draw_text('PRESS SPACEBAR TO PLAY', self.screen, [WIDTH // 2, HEIGHT // 2], START_FONT_SIZE,
+        self.draw_text('PRESS SPACEBAR TO PLAY', self.screen, [WIDTH // 2, HEIGHT // 2], 32,
                        (170, 132, 58), START_FONT, centered=True)
-        self.draw_text('1 PLAYER ONLY', self.screen, [WIDTH // 2, HEIGHT // 2 + 50], START_FONT_SIZE, (44, 167, 198),
+        self.draw_text('1 PLAYER ONLY', self.screen, [WIDTH // 2, HEIGHT // 2 + 50], 16, (44, 167, 198),
                        START_FONT, centered=True)
         pygame.display.update()
 
@@ -208,7 +208,7 @@ class App:
             self.state = "game over"
         else:
             self.player.grid_pos = vec(self.player.starting_pos)
-            self.player.pix_pos = self.player.get_pix_post()
+            self.player.pix_pos = self.player.get_pix_pos()
             self.player.direction *= 0
             for enemy in self.enemies:
                 enemy.grid_pos = vec(enemy.starting_pos)
@@ -236,4 +236,10 @@ class App:
 
     def game_over_draw(self):
         self.screen.fill(BLACK)
+        self.draw_text('GAME OVER', self.screen, [WIDTH // 2, HEIGHT // 2 - 75], 52, RED,
+                       START_FONT, centered=True)
+        self.draw_text('PRESS SPACEBAR TO PLAY', self.screen, [WIDTH // 2, HEIGHT // 2], 32,
+                       (170, 132, 58), START_FONT, centered=True)
+        self.draw_text('PRESS ESCAPE TO QUIT', self.screen, [WIDTH // 2, HEIGHT // 2 + 50], 16, (44, 167, 198),
+                       START_FONT, centered=True)
         pygame.display.update()
