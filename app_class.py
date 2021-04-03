@@ -34,7 +34,7 @@ class App:
 
         self.load()
 
-        self.player = Player(self, copy.copy(self.p_pos))
+        self.player = Player(self, vec(self.p_pos))
         self.make_enemies()
 
     def run(self):
@@ -87,7 +87,7 @@ class App:
                         self.p_pos = [xidx, yidx]
                     elif char in ['6', '7', '8', '9']:
                         # print(xidx, yidx)
-                        self.e_pos.append(vec(xidx, yidx))
+                        self.e_pos.append([xidx, yidx])
                     elif char == "B":
                         pygame.draw.rect(self.background, BLACK,
                                         (xidx * self.cell_width, yidx * self.cell_height,
@@ -97,7 +97,7 @@ class App:
 
     def make_enemies(self):
         for idx, pos in enumerate(self.e_pos):
-            self.enemies.append(Enemy(self, pos, idx))
+            self.enemies.append(Enemy(self, vec(pos), idx))
 
     def draw_grid(self):
         # 560 / 20 = 28 lines
@@ -180,11 +180,15 @@ class App:
     def remove_life(self):
         self.player.lives -= 1
         if self.player.lives == 0:
-            self.state == "game over"
+            self.state = "game over"
         else:
-            self.player.grid_pos = vec(self.p_pos)
+            self.player.grid_pos = vec(self.player.starting_pos)
             self.player.pix_pos = self.player.get_pix_post()
             self.player.direction *= 0
+            for enemy in self.enemies:
+                enemy.grid_pos = vec(enemy.starting_pos)
+                enemy.pix_pos = enemy.get_pix_pos()
+                enemy.direction *= 0
 
     def draw_coins(self):
         for coin in self.coins:

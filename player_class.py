@@ -8,7 +8,8 @@ vec = pygame.math.Vector2
 class Player:
     def __init__(self, app, pos):
         self.app = app
-        self.grid_pos = vec(pos[0], pos[1])
+        self.starting_pos = [pos.x, pos.y]
+        self.grid_pos = pos
         self.pix_pos = self.get_pix_post()
         self.direction = vec(1, 0)
         self.stored_direction = None
