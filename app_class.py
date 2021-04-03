@@ -24,6 +24,7 @@ class App:
         self.cell_height = MAZE_HEIGHT // 30
 
         self.player = Player(self, PLAYER_START_POS)
+        self.walls = []
 
         self.load()
 
@@ -63,6 +64,16 @@ class App:
         self.background = pygame.image.load('img/background.png')
         # resize to new resolution
         self.background = pygame.transform.scale(self.background, (MAZE_WIDTH, MAZE_HEIGHT))
+
+        # Opening walls file
+        # Creating walls list with co-ords of wall
+        with open('walls.txt', 'r') as file:
+            for yidx, line in enumerate(file):
+                for xidx, char in enumerate(line):
+                    if char == "1":
+                        self.walls.append(vec(xidx, yidx))
+        print(self.walls)
+        print(len(self.walls))
 
     def draw_grid(self):
         # 560 / 20 = 28 lines
