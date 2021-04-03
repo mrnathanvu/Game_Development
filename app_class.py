@@ -72,8 +72,8 @@ class App:
                 for xidx, char in enumerate(line):
                     if char == "1":
                         self.walls.append(vec(xidx, yidx))
-        print(self.walls)
-        print(len(self.walls))
+        # print(self.walls)
+        # print(len(self.walls))
 
     def draw_grid(self):
         # 560 / 20 = 28 lines
@@ -85,6 +85,11 @@ class App:
         for x in range(HEIGHT // self.cell_height):
             # draw horizontal lines (start position of the line -> end position of the line, (x, y)
             pygame.draw.line(self.background, (107, 107, 107), (0, x * self.cell_height), (WIDTH, x * self.cell_height))
+
+        for wall in self.walls:
+            pygame.draw.rect(self.background, (107, 107, 107),
+                            (wall.x * self.cell_width, wall.y * self.cell_height,
+                             self.cell_width, self.cell_height))
 
     #################### INTRO FUNCTIONS ####################
     def start_events(self):
