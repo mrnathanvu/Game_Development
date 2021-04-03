@@ -98,7 +98,6 @@ class App:
         for idx, pos in enumerate(self.e_pos):
             self.enemies.append(Enemy(self, pos, idx))
 
-
     def draw_grid(self):
         # 560 / 20 = 28 lines
         for x in range(WIDTH // self.cell_width):
