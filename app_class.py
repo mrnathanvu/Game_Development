@@ -25,6 +25,7 @@ class App:
 
         self.player = Player(self, PLAYER_START_POS)
         self.walls = []
+        self.coins = []
 
         self.load()
 
@@ -72,6 +73,8 @@ class App:
                 for xidx, char in enumerate(line):
                     if char == "1":
                         self.walls.append(vec(xidx, yidx))
+                    elif char == "C":
+                        self.coins.append(vec(xidx, yidx))
         # print(self.walls)
         # print(len(self.walls))
 
@@ -86,10 +89,14 @@ class App:
             # draw horizontal lines (start position of the line -> end position of the line, (x, y)
             pygame.draw.line(self.background, (107, 107, 107), (0, x * self.cell_height), (WIDTH, x * self.cell_height))
 
-        for wall in self.walls:
-            pygame.draw.rect(self.background, (107, 107, 107),
-                            (wall.x * self.cell_width, wall.y * self.cell_height,
-                             self.cell_width, self.cell_height))
+        # for wall in self.walls:
+        #     pygame.draw.rect(self.background, (107, 107, 107),
+        #                     (wall.x * self.cell_width, wall.y * self.cell_height,
+        #                      self.cell_width, self.cell_height))
+        # for coin in self.coins:
+        #     pygame.draw.rect(self.background, (255, 255, 0),
+        #                     (coin.x * self.cell_width, coin.y * self.cell_height,
+        #                      self.cell_width, self.cell_height))
 
     #################### INTRO FUNCTIONS ####################
     def start_events(self):
@@ -132,8 +139,16 @@ class App:
     def playing_draw(self):
         self.screen.fill((0, 0, 0))
         self.screen.blit(self.background, (TOP_BOTTOM_BUFFER // 2, TOP_BOTTOM_BUFFER // 2))
-        # self.draw_grid()
+        self.draw_coins()
+        self.draw_grid()
         self.draw_text('HIGH SCORE: 0', self.screen, [4, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
         self.draw_text('CURRENT SCORE: 0', self.screen, [254, 0], START_FONT_SIZE, (255, 255, 255), START_FONT)
         self.player.draw()
         pygame.display.update()
+        # self.coins.pop()
+
+    def draw_coins(self):
+        for coin in self.coins:
+            pygame.draw.circle(self.screen, (254, 226, 62),
+                              (int(coin.x * self.cell_width) + self.cell_width // 2 + TOP_BOTTOM_BUFFER // 2,
+                               int(coin.y * self.cell_height) + self.cell_height // 2 + TOP_BOTTOM_BUFFER // 2), 5)
